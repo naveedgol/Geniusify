@@ -27,6 +27,38 @@ function geniusSearch( text )
             document.getElementById( "artist" ).style.display = "block";
             document.getElementById( "cover" ).src = obj.response.hits[0].result.song_art_image_thumbnail_url;
             document.getElementById( "cover" ).style.display = "block";
+            geniusSongInfo( obj.response.hits[0].result.id );
+        }
+    }
+}
+
+function geniusSongInfo( songId )
+{
+    var xhr = new XMLHttpRequest();
+    xhr.open(
+        'GET',
+        "https://api.genius.com/songs/" + songId + "?access_token=" + accessToken,
+        true
+    );
+    xhr.send();
+
+    xhr.onreadystatechange = function()
+    {
+        if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
+        {
+            var obj = JSON.parse( xhr.responseText );
+            document.getElementById( "album" ).innerHTML = "Album: " + obj.response.song.album.name;
+            document.getElementById( "album" ).style.display = "block";
+            for( var i = 0; i < obj.response.song.producer_artists.length; i++ )
+            {
+                document.getElementById( "producers" ).innerHTML += "- " + obj.response.song.producer_artists[i].name + "<br>";
+            }
+            document.getElementById( "producerList" ).style.display = "block";
+            for( var i = 0; i < obj.response.song.writer_artists.length; i++ )
+            {
+                document.getElementById( "writers" ).innerHTML += "- " + obj.response.song.writer_artists[i].name + "<br>";
+            }
+            document.getElementById( "writerList" ).style.display = "block";
         }
     }
 }
