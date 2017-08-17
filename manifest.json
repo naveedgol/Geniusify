@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "name": "Geniusify",
+    "description": "Find out every detail about a song",
+    "version": "1.0",
+    "icons": {
+        "48": "icon.png"
+    },
+    "permissions": [
+        "activeTab"
+    ],
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    }
+}
