@@ -6,8 +6,12 @@
     "icons": {
         "48": "icon.png"
     },
+    "options_page": "options.html",
     "permissions": [
-        "activeTab"
+        "activeTab",
+    	"storage",
+    	"identity",
+    	"https://api.genius.com/"
     ],
     "browser_action": {
         "default_icon": "icon.png",

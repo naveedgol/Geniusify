@@ -1,3 +1,5 @@
+var accessToken;
+
 function geniusSearch( text )
 {
     if( !text )
@@ -9,7 +11,7 @@ function geniusSearch( text )
     var xhr = new XMLHttpRequest();
     xhr.open(
         'GET',
-        "https://api.genius.com/search?access_token=" + "<accesstoken>" + "&q=" + text,
+        "https://api.genius.com/search?access_token=" + accessToken + "&q=" + text,
         true
     );
     xhr.send();
@@ -35,6 +37,21 @@ chrome.tabs.executeScript(
     },
     function( selection )
     {
-        geniusSearch( selection[0] );
+        chrome.storage.sync.get(
+            'accessToken',
+            function( result )
+            {
+                accessToken = result.accessToken;
+                if( !accessToken )
+                {
+                    document.getElementById( "helpText" ).style.display = "block";
+                    document.getElementById( "helpText" ).innerHTML = "Authenticate in settings";
+                }
+                else
+                {
+                    geniusSearch( selection[0] );
+                }
+            }
+        );
     }
 );
