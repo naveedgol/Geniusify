@@ -26,6 +26,13 @@ function geniusSearch( text )
         if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
         {
             var obj = JSON.parse( xhr.responseText );
+            if( obj.response.hits.length == 0 )
+            {
+                document.getElementById( "helpText" ).innerHTML = "No results found.";
+                document.getElementById( "helpText" ).style.display = "block";
+                return;
+            }
+
             document.getElementById( "title" ).innerHTML = linkBuilder( obj.response.hits[0].result.title, obj.response.hits[0].result.url );
             document.getElementById( "title" ).style.display = "block";
 
@@ -58,7 +65,7 @@ function geniusSongInfo( songId )
             var numberOfFeatures = obj.response.song.featured_artists.length;
             for( var i = 0; i < numberOfFeatures; i++ )
             {
-                if( i == numberOfFeatures - 1 ) //second last
+                if( i == numberOfFeatures - 1 && i != 0 ) //second last
                 {
                     document.getElementById( "features" ).innerHTML += "<span style='color: #9a9a9a'> & </span>";
                 }

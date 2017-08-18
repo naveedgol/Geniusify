@@ -8,7 +8,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    background-color: black;
+    background-color: #0F0D0D;
     color: white;
 }
 
@@ -103,9 +103,19 @@ details[open] summary:after
 #cover
 {
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     width: 300px;
     outline: 2px solid #9a9a9a;
+}
+
+#spotifyPlayer
+{
+    outline: 2px solid #9a9a9a;
+}
+
+#helpText
+{
+    text-align: center;
 }
 
 .listContent
