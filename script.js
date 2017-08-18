@@ -47,19 +47,52 @@ function geniusSongInfo( songId )
         if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
         {
             var obj = JSON.parse( xhr.responseText );
+
+            var numberOfFeatures = obj.response.song.featured_artists.length;
+            for( var i = 0; i < numberOfFeatures; i++ )
+            {
+                if( i == numberOfFeatures - 1 ) //second last
+                {
+                    document.getElementById( "features" ).innerHTML += "<span style='color: #9a9a9a'> & </span>";
+                }
+                else if( i > 0 )
+                {
+                    document.getElementById( "features" ).innerHTML += "<span style='color: #9a9a9a'>, </span>";
+                }
+                document.getElementById( "features" ).innerHTML += obj.response.song.featured_artists[i].name;
+            }
+            if( numberOfFeatures > 0 )
+            {
+                document.getElementById( "features" ).style.display = "inline";
+                document.getElementById( "featuresTag" ).style.display = "inline";
+                document.getElementById( "features" ).innerHTML += "<br>"
+            }
+
             document.getElementById( "album" ).innerHTML += obj.response.song.album.name;
             document.getElementById( "album" ).style.display = "inline";
             document.getElementById( "albumTag" ).style.display = "inline";
+
             for( var i = 0; i < obj.response.song.producer_artists.length; i++ )
             {
                 document.getElementById( "producers" ).innerHTML += "• " + obj.response.song.producer_artists[i].name + "<br>";
             }
             document.getElementById( "producerList" ).style.display = "block";
+
             for( var i = 0; i < obj.response.song.writer_artists.length; i++ )
             {
                 document.getElementById( "writers" ).innerHTML += "• " + obj.response.song.writer_artists[i].name + "<br>";
             }
             document.getElementById( "writerList" ).style.display = "block";
+
+            var songRelationships = [ "samples", "sampledIn", "interpolates", "interpolatedBy", "coverOf", "coveredBy", "remixOf", "remixedBy", "liveVersionOf", "performedLiveAs" ];
+            for( var j = 0; j < 10; j++ )
+            {
+                for( var i = 0; i < obj.response.song.song_relationships[j].songs.length; i++ )
+                {
+                    document.getElementById( songRelationships[j] ).innerHTML += "• " + obj.response.song.song_relationships[j].songs[i].full_title + "<br>";
+                    document.getElementById( songRelationships[j] + "List" ).style.display = "block";
+                }
+            }
         }
     }
 }
