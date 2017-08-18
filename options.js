@@ -19,4 +19,4 @@ function authenticate()
     );
 }
 
-document.getElementById('authenticateButton').addEventListener( 'click', authenticate );
+document.getElementById('loginButton').addEventListener( 'click', authenticate );

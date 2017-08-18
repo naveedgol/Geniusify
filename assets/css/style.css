@@ -31,7 +31,7 @@ body
     user-select: none;
     margin: 5px;
     cursor: default;
-    font-family: montserrat;
+    font-family: montserrat, arial;
     width: 300px;
 }
 
@@ -46,7 +46,6 @@ summary
 {
     outline: none;
     color: #9a9a9a;
-
 }
 
 summary::-webkit-details-marker
@@ -80,26 +79,6 @@ details[open] summary:after
     font-size: 130%;
 }
 
-#album
-{
-    color: #7d8fe8;
-}
-
-#albumTag
-{
-    color: #9a9a9a;
-}
-
-#features
-{
-    color: #7d8fe8;
-}
-
-#featuresTag
-{
-    color: #9a9a9a;
-}
-
 #cover
 {
     margin-top: 5px;
@@ -118,9 +97,26 @@ details[open] summary:after
     text-align: center;
 }
 
+.tagContent
+{
+    color: #7d8fe8;
+}
+
+.tag
+{
+    color: #9a9a9a;
+}
+
 .listContent
 {
     color: #7d8fe8;
     margin-left: 15px;
     font-size: 90%;
+}
+
+.internalLink
+{
+    cursor: pointer;
+    display: inline;
+    color: inherit;
 }

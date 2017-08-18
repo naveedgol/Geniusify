@@ -1,8 +1,49 @@
 var accessToken;
+var songRelationships = [ "samples", "sampledIn", "interpolates", "interpolatedBy", "coverOf", "coveredBy", "remixOf", "remixedBy", "liveVersionOf", "performedLiveAs" ];
 
-function linkBuilder( text, url )
+function clear()
 {
-    return "<a href=\"" + url + "\">" + text + "</a>";
+    var p = document.getElementsByTagName( "p" );
+    for( var i = 0; i < p.length; i++ )
+    {
+        p[i].style.display = "none";
+    }
+    var details = document.getElementsByTagName( "details" );
+    for( var i = 0; i < details.length; i++ )
+    {
+        details[i].style.display = "none";
+        details[i].open = false;
+    }
+    var img = document.getElementsByTagName( "img" );
+    for( var i = 0; i < img.length; i++ )
+    {
+        img[i].style.display = "none";
+    }
+    var iframe = document.getElementsByTagName( "iframe" );
+    for( var i = 0; i < iframe.length; i++ )
+    {
+        iframe[i].style.display = "none";
+    }
+    
+    document.getElementById( "features" ).innerHTML = "";
+    document.getElementById( "album" ).innerHTML = "";
+    document.getElementById( "releaseDate" ).innerHTML = "";
+    document.getElementById( "producers" ).innerHTML = "";
+    document.getElementById( "writers" ).innerHTML = "";
+    for( var i = 0; i < songRelationships.length; i++ )
+    {
+        document.getElementById( songRelationships[i] ).innerHTML = "";
+    }
+}
+
+function externalLinkBuilder( text, url )
+{
+    return "<a class=\"externalLink\" href=\"" + url + "\">" + text + "</a>";
+}
+
+function internalLinkBuilder( text, songId )
+{
+    return "<div class=\"internalLink\" id=\"" + songId + "\">" + text + "</div>";
 }
 
 function geniusSearch( text )
@@ -21,32 +62,43 @@ function geniusSearch( text )
     );
     xhr.send();
 
+    clear();
+
     xhr.onreadystatechange = function()
     {
         if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
         {
-            var obj = JSON.parse( xhr.responseText );
-            if( obj.response.hits.length == 0 )
+            var json = JSON.parse( xhr.responseText );
+
+            if( json.response.hits.length == 0 )
             {
                 document.getElementById( "helpText" ).innerHTML = "No results found.";
                 document.getElementById( "helpText" ).style.display = "block";
                 return;
             }
 
-            document.getElementById( "title" ).innerHTML = linkBuilder( obj.response.hits[0].result.title, obj.response.hits[0].result.url );
+            var topHit = json.response.hits[0].result;
+
+            document.getElementById( "title" ).innerHTML = externalLinkBuilder( topHit.title, topHit.url );
             document.getElementById( "title" ).style.display = "block";
 
-            document.getElementById( "artist" ).innerHTML = linkBuilder( obj.response.hits[0].result.primary_artist.name, obj.response.hits[0].result.primary_artist.url );
+            document.getElementById( "artist" ).innerHTML = externalLinkBuilder( topHit.primary_artist.name, topHit.primary_artist.url );
             document.getElementById( "artist" ).style.display = "block";
 
-            document.getElementById( "cover" ).src = obj.response.hits[0].result.song_art_image_thumbnail_url;
+            document.getElementById( "cover" ).src = topHit.song_art_image_thumbnail_url;
             document.getElementById( "cover" ).style.display = "block";
-            geniusSongInfo( obj.response.hits[0].result.id );
+            geniusSongInfo( topHit.id, false );
+        }
+        else if( xhr.readyState == XMLHttpRequest.DONE && xhr.status != 200 )
+        {
+            document.getElementById( "helpText" ).style.display = "block";
+            document.getElementById( "helpText" ).innerHTML = "Authenticate in settings";
+            return;
         }
     }
 }
 
-function geniusSongInfo( songId )
+function geniusSongInfo( songId, isInternal )
 {
     var xhr = new XMLHttpRequest();
     xhr.open(
@@ -56,13 +108,31 @@ function geniusSongInfo( songId )
     );
     xhr.send();
 
+    if( isInternal )
+    {
+        clear();
+    }
+
     xhr.onreadystatechange = function()
     {
         if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
         {
-            var obj = JSON.parse( xhr.responseText );
+            var json = JSON.parse( xhr.responseText );
+            var song = json.response.song;
 
-            var numberOfFeatures = obj.response.song.featured_artists.length;
+            if( isInternal )
+            {
+                document.getElementById( "title" ).innerHTML = externalLinkBuilder( song.title, song.url );
+                document.getElementById( "title" ).style.display = "block";
+
+                document.getElementById( "artist" ).innerHTML = externalLinkBuilder( song.primary_artist.name, song.primary_artist.url );
+                document.getElementById( "artist" ).style.display = "block";
+
+                document.getElementById( "cover" ).src = song.song_art_image_thumbnail_url;
+                document.getElementById( "cover" ).style.display = "block";
+            }
+
+            var numberOfFeatures = song.featured_artists.length;
             for( var i = 0; i < numberOfFeatures; i++ )
             {
                 if( i == numberOfFeatures - 1 && i != 0 ) //second last
@@ -73,7 +143,7 @@ function geniusSongInfo( songId )
                 {
                     document.getElementById( "features" ).innerHTML += "<span style='color: #9a9a9a'>, </span>";
                 }
-                document.getElementById( "features" ).innerHTML += linkBuilder( obj.response.song.featured_artists[i].name , obj.response.song.featured_artists[i].url );
+                document.getElementById( "features" ).innerHTML += externalLinkBuilder( song.featured_artists[i].name , song.featured_artists[i].url );
             }
             if( numberOfFeatures > 0 )
             {
@@ -82,56 +152,84 @@ function geniusSongInfo( songId )
                 document.getElementById( "features" ).innerHTML += "<br>"
             }
 
-            if( obj.response.song.album != null )
+            if( song.album != null )
             {
-                document.getElementById( "album" ).innerHTML += linkBuilder( obj.response.song.album.name, obj.response.song.album.url );
+                document.getElementById( "album" ).innerHTML += externalLinkBuilder( song.album.name, song.album.url ) + "<br>";
                 document.getElementById( "album" ).style.display = "inline";
                 document.getElementById( "albumTag" ).style.display = "inline";
             }
 
-            for( var i = 0; i < obj.response.song.producer_artists.length; i++ )
+            if( song.release_date != null )
             {
-                document.getElementById( "producers" ).innerHTML += "• " + linkBuilder( obj.response.song.producer_artists[i].name, obj.response.song.producer_artists[i].url ) + "<br>";
+                var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+                document.getElementById( "releaseDate" ).innerHTML +=
+                monthNames[ parseInt( song.release_date.substring( 5, 7 ) ) ] + " "
+                + song.release_date.substring( 8, 10 ) + ", "
+                + song.release_date.substring( 0, 4 );
+                document.getElementById( "releaseDate" ).style.display = "inline";
+                document.getElementById( "releaseDateTag" ).style.display = "inline";
+            }
+
+            for( var i = 0; i < song.producer_artists.length; i++ )
+            {
+                document.getElementById( "producers" ).innerHTML += "• " + externalLinkBuilder( song.producer_artists[i].name, song.producer_artists[i].url ) + "<br>";
                 document.getElementById( "producerList" ).style.display = "block";
+                document.getElementById( "producers" ).style.display = "block";
             }
 
-            for( var i = 0; i < obj.response.song.writer_artists.length; i++ )
+            for( var i = 0; i < song.writer_artists.length; i++ )
             {
-                document.getElementById( "writers" ).innerHTML += "• " + linkBuilder( obj.response.song.writer_artists[i].name, obj.response.song.writer_artists[i].url ) + "<br>";
+                document.getElementById( "writers" ).innerHTML += "• " + externalLinkBuilder( song.writer_artists[i].name, song.writer_artists[i].url ) + "<br>";
                 document.getElementById( "writerList" ).style.display = "block";
+                document.getElementById( "writers" ).style.display = "block";
             }
 
-            var songRelationships = [ "samples", "sampledIn", "interpolates", "interpolatedBy", "coverOf", "coveredBy", "remixOf", "remixedBy", "liveVersionOf", "performedLiveAs" ];
-            for( var j = 0; j < 10; j++ )
+            for( var j = 0; j < songRelationships.length; j++ )
             {
-                for( var i = 0; i < obj.response.song.song_relationships[j].songs.length; i++ )
+                for( var i = 0; i < song.song_relationships[j].songs.length; i++ )
                 {
-                    document.getElementById( songRelationships[j] ).innerHTML += "• " + linkBuilder( obj.response.song.song_relationships[j].songs[i].full_title, obj.response.song.song_relationships[j].songs[i].url ) + "<br>";
+                    document.getElementById( songRelationships[j] ).innerHTML += "• " + internalLinkBuilder( song.song_relationships[j].songs[i].title, song.song_relationships[j].songs[i].id ) + "<br>";
                     document.getElementById( songRelationships[j] + "List" ).style.display = "block";
+                    document.getElementById( songRelationships[j] ).style.display = "block";
                 }
             }
-            for( var i = 0; i < obj.response.song.media.length; i++ )
+            for( var i = 0; i < song.media.length; i++ )
             {
-                if( obj.response.song.media[i].provider == "spotify" )
+                if( song.media[i].provider == "spotify" )
                 {
-                    document.getElementById( "spotifyPlayer" ).src = "https://open.spotify.com/embed?uri=spotify%3Atrack%3A" + obj.response.song.media[i].url.substring( obj.response.song.media[i].url.indexOf( 31 ) );
+                    document.getElementById( "spotifyPlayer" ).src = "https://open.spotify.com/embed?uri=spotify%3Atrack%3A" + song.media[i].url.substring( song.media[i].url.indexOf( 31 ) );
                     document.getElementById( "spotifyPlayer" ).style.display = "block";
                 }
             }
-
         }
 
-        var links = document.getElementsByTagName("a");
-        for( var i = 0; i < links.length; i++ )
+        var externalLinks = document.getElementsByClassName( "externalLink" );
+        for( var i = 0; i < externalLinks.length; i++ )
         {
-            (function () {
-                var ln = links[i];
-                ln.onclick = function () {
-                    chrome.tabs.create({active: true, url: ln.href});
+            (function()
+            {
+                var ln = externalLinks[i];
+                ln.onclick = function()
+                {
+                    chrome.tabs.create( { active: false, url: ln.href } );
                 };
-            })();
-        }
+            }
+        )();
     }
+    var internalLinks = document.getElementsByClassName( "internalLink" );
+    for( var i = 0; i < internalLinks.length; i++ )
+    {
+        (function()
+        {
+            var ln = internalLinks[i];
+            ln.onclick = function()
+            {
+                geniusSongInfo( ln.id, true );
+            };
+        }
+    )();
+}
+}
 }
 
 chrome.tabs.executeScript(

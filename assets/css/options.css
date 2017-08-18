@@ -1,0 +1,72 @@
+/*resets*/
+html, body, div, span, applet, object, input, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
+{
+    margin: 5px;
+    padding: 0;
+    border: 0;
+    line-height: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    background-color: #0F0D0D;
+    color: white;
+}
+
+@font-face
+{
+    font-family: montserrat;
+    font-weight: normal;
+    src: url(../Fonts/montserrat-regular.ttf);
+}
+
+@font-face
+{
+    font-family: montserrat;
+    font-weight: bold;
+    src: url(../Fonts/montserrat-bold.ttf);
+}
+
+body
+{
+    text-align: center;
+    font-family: montserrat, arial;
+}
+
+#loginButton
+{
+    outline: none;
+    margin-left: 25%;
+    width: 50%;
+    display: block;
+    opacity: 0.9;
+    border-radius: 5px;
+}
+
+#loginButton:hover
+{
+    opacity: 1;
+}
+
+.title
+{
+    cursor: default;
+    padding-top: 8vh;
+    padding-bottom: 5vh;
+    color: #ffff64;
+    font-size: calc(100% + 2.5vw);
+    font-weight: bold;
+}
+
+.icon img
+{
+    padding-top: 5vh;
+	opacity: 0.8;
+	height: 50px;
+	width: 50px;
+	transition: width 0.3s, height 0.3s;
+}
+
+.icon:hover img
+{
+	opacity: 1;
+}

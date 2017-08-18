@@ -9,14 +9,18 @@
     <p id="helpText" style="display: none;">
         Highlight some text then click me!
     </p>
+
     <p id="title" style="display: none;"></p>
     <p id="artist" style="display: none;"></p>
 
-    <p id="featuresTag" style="display: none;">Featuring </p>
-    <p id="features" style="display: none;"></p>
+    <p class="tag" id="featuresTag" style="display: none;">Featuring </p>
+    <p class="tagContent" id="features" style="display: none;"></p>
 
-    <p id="albumTag" style="display: none;">Album </p>
-    <p id="album" style="display: none;"></p>
+    <p class="tag" id="albumTag" style="display: none;">Album </p>
+    <p class="tagContent" id="album" style="display: none;"></p>
+
+    <p class="tag" id="releaseDateTag" style="display: none;">Release Date </p>
+    <p class="tagContent" id="releaseDate" style="display: none;"></p>
 
     <details id="producerList" style="display: none;">
         <summary>Producers</summary>
@@ -43,9 +47,9 @@
         <p class="listContent" id="interpolates"></p>
     </details>
 
-    <details id="interpolatesByList" style="display: none;">
+    <details id="interpolatedByList" style="display: none;">
         <summary>Interpolated by</summary>
-        <p class="listContent" id="interpolatesBy"></p>
+        <p class="listContent" id="interpolatedBy"></p>
     </details>
 
     <details id="coverOfList" style="display: none;">
