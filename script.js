@@ -1,6 +1,19 @@
 var accessToken;
 var songRelationships = [ "samples", "sampledIn", "interpolates", "interpolatedBy", "coverOf", "coveredBy", "remixOf", "remixedBy", "liveVersionOf", "performedLiveAs" ];
 
+function optionsPrompt()
+{
+    document.getElementById( "helpText" ).innerHTML = "Go to " + "<button id=\"optionsButton\">" + "options" + "</button>" + " and login.";
+    document.getElementById( "helpText" ).style.display = "block";
+    document.getElementById( 'optionsButton' ).addEventListener(
+        'click',
+        function()
+        {
+            chrome.runtime.openOptionsPage();
+        }
+    );
+}
+
 function clear()
 {
     var p = document.getElementsByTagName( "p" );
@@ -24,7 +37,7 @@ function clear()
     {
         iframe[i].style.display = "none";
     }
-    
+
     document.getElementById( "features" ).innerHTML = "";
     document.getElementById( "album" ).innerHTML = "";
     document.getElementById( "releaseDate" ).innerHTML = "";
@@ -91,8 +104,7 @@ function geniusSearch( text )
         }
         else if( xhr.readyState == XMLHttpRequest.DONE && xhr.status != 200 )
         {
-            document.getElementById( "helpText" ).style.display = "block";
-            document.getElementById( "helpText" ).innerHTML = "Authenticate in settings";
+            optionsPrompt();
             return;
         }
     }
@@ -245,8 +257,7 @@ chrome.tabs.executeScript(
                 accessToken = result.accessToken;
                 if( !accessToken )
                 {
-                    document.getElementById( "helpText" ).style.display = "block";
-                    document.getElementById( "helpText" ).innerHTML = "Authenticate in settings";
+                    optionsPrompt();
                 }
                 else
                 {
