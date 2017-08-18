@@ -32,7 +32,7 @@ body
     margin: 5px;
     cursor: default;
     font-family: montserrat;
-    width: 250px;
+    width: 300px;
 }
 
 a
@@ -104,7 +104,7 @@ details[open] summary:after
 {
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 250px;
+    width: 300px;
     outline: 2px solid #9a9a9a;
 }
 

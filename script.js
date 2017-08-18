@@ -85,14 +85,14 @@ function geniusSongInfo( songId )
             for( var i = 0; i < obj.response.song.producer_artists.length; i++ )
             {
                 document.getElementById( "producers" ).innerHTML += "• " + linkBuilder( obj.response.song.producer_artists[i].name, obj.response.song.producer_artists[i].url ) + "<br>";
+                document.getElementById( "producerList" ).style.display = "block";
             }
-            document.getElementById( "producerList" ).style.display = "block";
 
             for( var i = 0; i < obj.response.song.writer_artists.length; i++ )
             {
                 document.getElementById( "writers" ).innerHTML += "• " + linkBuilder( obj.response.song.writer_artists[i].name, obj.response.song.writer_artists[i].url ) + "<br>";
+                document.getElementById( "writerList" ).style.display = "block";
             }
-            document.getElementById( "writerList" ).style.display = "block";
 
             var songRelationships = [ "samples", "sampledIn", "interpolates", "interpolatedBy", "coverOf", "coveredBy", "remixOf", "remixedBy", "liveVersionOf", "performedLiveAs" ];
             for( var j = 0; j < 10; j++ )
@@ -103,6 +103,15 @@ function geniusSongInfo( songId )
                     document.getElementById( songRelationships[j] + "List" ).style.display = "block";
                 }
             }
+            for( var i = 0; i < obj.response.song.media.length; i++ )
+            {
+                if( obj.response.song.media[i].provider == "spotify" )
+                {
+                    document.getElementById( "spotifyPlayer" ).src = "https://open.spotify.com/embed?uri=spotify%3Atrack%3A" + obj.response.song.media[i].url.substring( obj.response.song.media[i].url.indexOf( 31 ) );
+                    document.getElementById( "spotifyPlayer" ).style.display = "block";
+                }
+            }
+
         }
 
         var links = document.getElementsByTagName("a");
