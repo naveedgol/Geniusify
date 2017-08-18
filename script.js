@@ -21,9 +21,9 @@ function geniusSearch( text )
         if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
         {
             var obj = JSON.parse( xhr.responseText );
-            document.getElementById( "title" ).innerHTML = "Title: " + obj.response.hits[0].result.title;
+            document.getElementById( "title" ).innerHTML = obj.response.hits[0].result.title;
             document.getElementById( "title" ).style.display = "block";
-            document.getElementById( "artist" ).innerHTML = "Artist: " + obj.response.hits[0].result.primary_artist.name;
+            document.getElementById( "artist" ).innerHTML = obj.response.hits[0].result.primary_artist.name;
             document.getElementById( "artist" ).style.display = "block";
             document.getElementById( "cover" ).src = obj.response.hits[0].result.song_art_image_thumbnail_url;
             document.getElementById( "cover" ).style.display = "block";
@@ -47,16 +47,17 @@ function geniusSongInfo( songId )
         if( xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 )
         {
             var obj = JSON.parse( xhr.responseText );
-            document.getElementById( "album" ).innerHTML = "Album: " + obj.response.song.album.name;
-            document.getElementById( "album" ).style.display = "block";
+            document.getElementById( "album" ).innerHTML += obj.response.song.album.name;
+            document.getElementById( "album" ).style.display = "inline";
+            document.getElementById( "albumTag" ).style.display = "inline";
             for( var i = 0; i < obj.response.song.producer_artists.length; i++ )
             {
-                document.getElementById( "producers" ).innerHTML += "- " + obj.response.song.producer_artists[i].name + "<br>";
+                document.getElementById( "producers" ).innerHTML += "• " + obj.response.song.producer_artists[i].name + "<br>";
             }
             document.getElementById( "producerList" ).style.display = "block";
             for( var i = 0; i < obj.response.song.writer_artists.length; i++ )
             {
-                document.getElementById( "writers" ).innerHTML += "- " + obj.response.song.writer_artists[i].name + "<br>";
+                document.getElementById( "writers" ).innerHTML += "• " + obj.response.song.writer_artists[i].name + "<br>";
             }
             document.getElementById( "writerList" ).style.display = "block";
         }

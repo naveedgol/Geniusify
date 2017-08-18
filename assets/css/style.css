@@ -1,0 +1,106 @@
+/*resets*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    background-color: black;
+    color: white;
+}
+
+@font-face
+{
+    font-family: montserrat;
+    font-weight: normal;
+    src: url(../Fonts/montserrat-regular.ttf);
+}
+
+@font-face
+{
+    font-family: montserrat;
+    font-weight: bold;
+    src: url(../Fonts/montserrat-bold.ttf);
+}
+
+body
+{
+    user-select: none;
+    margin: 5px;
+    cursor: default;
+    font-family: montserrat;
+    width: 250px;
+}
+
+summary
+{
+    outline: none;
+    color: #9a9a9a;
+
+}
+
+summary::-webkit-details-marker
+{
+    display: none
+}
+
+summary:after
+{
+    content: "+";
+    padding-right: 5px;
+    padding-left: 1px;
+    float: left;
+}
+
+details[open] summary:after
+{
+    padding-left: 2px;
+    content: "-";
+}
+
+#title
+{
+    font-weight: bold;
+    color: #ffff64;
+    font-size: 150%;
+}
+
+#artist
+{
+    font-size: 130%;
+}
+
+#album
+{
+    color: #7d8fe8;
+}
+
+#albumTag
+{
+    color: #9a9a9a;
+}
+
+#cover
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 250px;
+    outline: 2px solid #9a9a9a;
+}
+
+#producers
+{
+    color: #7d8fe8;
+    margin-left: 15px;
+    font-size: 90%;
+}
+
+#writers
+{
+    color: #7d8fe8;
+    margin-left: 15px;
+    font-size: 90%;
+}
