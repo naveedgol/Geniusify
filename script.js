@@ -63,6 +63,7 @@ function geniusSearch( text )
 {
     if( !text )
     {
+        document.getElementById( "helpText" ).innerHTML = "Highlight some text then click me!";
         document.getElementById( "helpText" ).style.display = "block";
         return;
     }
