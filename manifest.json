@@ -1,6 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Geniusify",
+    "short_name": "Geniusify",
     "description": "Find out every detail about a song",
     "version": "1.0",
     "icons": {
