@@ -10,6 +10,7 @@
     "options_page": "options.html",
     "permissions": [
         "activeTab",
+        "contextMenus",
     	"storage",
     	"identity",
     	"https://api.genius.com/"
