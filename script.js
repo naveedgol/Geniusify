@@ -176,8 +176,8 @@ function geniusSongInfo( songId, isInternal )
             {
                 var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
                 document.getElementById( "releaseDate" ).innerHTML +=
-                monthNames[ parseInt( song.release_date.substring( 5, 7 ) ) ] + " "
-                + song.release_date.substring( 8, 10 ) + ", "
+                monthNames[ parseInt( song.release_date.substring( 5, 7 ) ) - 1 ] + " "
+                + parseInt( song.release_date.substring( 8, 10 ) ) + ", "
                 + song.release_date.substring( 0, 4 );
                 document.getElementById( "releaseDate" ).style.display = "inline";
                 document.getElementById( "releaseDateTag" ).style.display = "inline";
