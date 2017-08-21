@@ -16,14 +16,14 @@ html, body, div, span, applet, object, input, iframe, h1, h2, h3, h4, h5, h6, p,
 {
     font-family: montserrat;
     font-weight: normal;
-    src: url(../Fonts/montserrat-regular.ttf);
+    src: url(../fonts/montserrat-regular.ttf);
 }
 
 @font-face
 {
     font-family: montserrat;
     font-weight: bold;
-    src: url(../Fonts/montserrat-bold.ttf);
+    src: url(../fonts/montserrat-bold.ttf);
 }
 
 body
