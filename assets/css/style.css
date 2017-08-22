@@ -90,6 +90,7 @@ details[open] summary:after
 #spotifyPlayer
 {
     outline: 2px solid #9a9a9a;
+    margin-bottom: 5px;
 }
 
 #helpText
@@ -110,6 +111,21 @@ details[open] summary:after
     outline: none;
     cursor: pointer;
 }
+
+#nextResult
+{
+    cursor: pointer;
+    float: right;
+    margin-bottom: 5px;
+}
+
+#previousResult
+{
+    cursor: pointer;
+    float: left;
+    margin-bottom: 5px;
+}
+
 .tagContent
 {
     color: #7d8fe8;

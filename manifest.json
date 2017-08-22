@@ -3,7 +3,7 @@
     "name": "Geniusify",
     "short_name": "Geniusify",
     "description": "Find out every detail about a song",
-    "version": "1.4",
+    "version": "1.5",
     "icons": {
         "48": "icon.png"
     },

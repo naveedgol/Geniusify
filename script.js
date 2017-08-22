@@ -1,5 +1,8 @@
 var accessToken;
 var songRelationships = [ "samples", "sampledIn", "interpolates", "interpolatedBy", "coverOf", "coveredBy", "remixOf", "remixedBy", "liveVersionOf", "performedLiveAs" ];
+var searchResults = [];
+var currentResult = 0;
+var internallyLinked = false;
 
 function optionsPrompt()
 {
@@ -35,6 +38,7 @@ function clear()
     var iframe = document.getElementsByTagName( "iframe" );
     for( var i = 0; i < iframe.length; i++ )
     {
+        iframe[i].src = "";
         iframe[i].style.display = "none";
     }
 
@@ -101,6 +105,21 @@ function geniusSearch( text )
 
             document.getElementById( "cover" ).src = topHit.song_art_image_thumbnail_url;
             document.getElementById( "cover" ).style.display = "block";
+
+            for( var i = 0; i < json.response.hits.length; i++ )
+            {
+                searchResults.push( json.response.hits[i].result.id );
+            }
+
+            if( searchResults[ currentResult + 1 ] )
+            {
+                document.getElementById( "nextResult" ).style.display = "inline";
+            }
+            if( searchResults[ currentResult - 1 ] )
+            {
+                document.getElementById( "previousResult" ).style.display = "inline";
+            }
+
             geniusSongInfo( topHit.id, false );
         }
         else if( xhr.readyState == XMLHttpRequest.DONE && xhr.status != 200 )
@@ -143,6 +162,15 @@ function geniusSongInfo( songId, isInternal )
 
                 document.getElementById( "cover" ).src = song.song_art_image_thumbnail_url;
                 document.getElementById( "cover" ).style.display = "block";
+
+                if( searchResults[ currentResult + 1 ] && !internallyLinked )
+                {
+                    document.getElementById( "nextResult" ).style.display = "inline";
+                }
+                if( searchResults[ currentResult - 1 ] && !internallyLinked )
+                {
+                    document.getElementById( "previousResult" ).style.display = "inline";
+                }
             }
 
             var numberOfFeatures = song.featured_artists.length;
@@ -237,11 +265,20 @@ function geniusSongInfo( songId, isInternal )
             var ln = internalLinks[i];
             ln.onclick = function()
             {
+                internallyLinked = true;
                 geniusSongInfo( ln.id, true );
             };
         }
     )();
-}
+    }
+    document.getElementById( "nextResult" ).onclick = function()
+    {
+        geniusSongInfo( searchResults[ ++currentResult ], true );
+    }
+    document.getElementById( "previousResult" ).onclick = function()
+    {
+        geniusSongInfo( searchResults[ --currentResult ], true );
+    }
 }
 }
 
