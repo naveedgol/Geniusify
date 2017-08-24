@@ -59,7 +59,6 @@ body
 
 .icon img
 {
-    padding-top: 5vh;
 	opacity: 0.8;
 	height: 50px;
 	width: 50px;
@@ -69,4 +68,30 @@ body
 .icon:hover img
 {
 	opacity: 1;
+}
+
+#loader
+{
+    margin-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0px;
+    text-align: center;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #99a7ee;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin
+{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#loginResponse
+{
+    cursor: default;
 }

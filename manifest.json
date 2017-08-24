@@ -3,20 +3,24 @@
     "name": "Geniusify",
     "short_name": "Geniusify",
     "description": "Find out every detail about a song",
-    "version": "1.5",
+    "version": "1.6",
     "icons": {
-        "48": "icon.png"
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
     },
-    "options_page": "options.html",
+    "options_ui": {
+        "page": "options.html",
+        "chrome_style": false
+    },
     "permissions": [
         "activeTab",
         "contextMenus",
-    	"storage",
-    	"identity",
-    	"https://api.genius.com/"
+        "storage",
+        "identity",
+        "https://api.genius.com/"
     ],
     "browser_action": {
-        "default_icon": "icon.png",
         "default_popup": "popup.html"
     }
 }
