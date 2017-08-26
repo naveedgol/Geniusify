@@ -2,8 +2,8 @@
     "manifest_version": 2,
     "name": "Geniusify",
     "short_name": "Geniusify",
-    "description": "Match highligthed lyrics to their song. Find out all about the song's artist, samples, and more!",
-    "version": "1.7",
+    "description": "Match highlighted lyrics to their song. Find out all about the song's artist, samples, and more!",
+    "version": "1.8",
     "icons": {
         "16": "icon16.png",
         "48": "icon48.png",
