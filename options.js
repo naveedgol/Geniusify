@@ -13,9 +13,7 @@ function authenticate()
             var accessToken = responseUrl.substring( responseUrl.indexOf( "=" ) + 1, responseUrl.indexOf( "&" ) );
             if( accessToken == "access_denied" )
             {
-                document.getElementById( "loader" ).style.display = "none";
                 document.getElementById( "loginResponse" ).innerHTML = "Please try again.";
-                document.getElementById( "loginResponse" ).style.display = "block";
             }
             else
             {
@@ -23,12 +21,12 @@ function authenticate()
                     { 'accessToken': accessToken },
                     function( result )
                     {
-                        document.getElementById( "loader" ).style.display = "none";
                         document.getElementById( "loginResponse" ).innerHTML = "Login succeeded!";
-                        document.getElementById( "loginResponse" ).style.display = "block";
                     }
                 );
             }
+            document.getElementById( "loader" ).style.display = "none";
+            document.getElementById( "loginResponse" ).style.display = "block";
         }
     );
 }
